@@ -718,18 +718,19 @@ static NSString *const HKPluginKeyUUID = @"UUID";
             [[HealthKit sharedHealthStore] saveObject:workout withCompletion:^(BOOL success_save, NSError *innerError) {
                 if (success_save) {
                     // now store the samples, so it shows up in the health app as well (pass this in as an option?)
-                    if (energy != nil || distance != nil) {
-                        HKQuantitySample *sampleActivity = [HKQuantitySample quantitySampleWithType:[HKQuantityType quantityTypeForIdentifier:
-                                        HKQuantityTypeIdentifierDistanceWalkingRunning]
-                                                                                           quantity:nrOfDistanceUnits
-                                                                                          startDate:startDate
-                                                                                            endDate:endDate];
+//                    if (energy != nil || distance != nil) {
+                    if (energy != nil) {
+//                        HKQuantitySample *sampleActivity = [HKQuantitySample quantitySampleWithType:[HKQuantityType quantityTypeForIdentifier:
+//                                        HKQuantityTypeIdentifierDistanceWalkingRunning]
+//                                                                                           quantity:nrOfDistanceUnits
+//                                                                                          startDate:startDate
+//                                                                                            endDate:endDate];
                         HKQuantitySample *sampleCalories = [HKQuantitySample quantitySampleWithType:[HKQuantityType quantityTypeForIdentifier:
                                         HKQuantityTypeIdentifierActiveEnergyBurned]
                                                                                            quantity:nrOfEnergyUnits
                                                                                           startDate:startDate
                                                                                             endDate:endDate];
-                        NSArray *samples = @[sampleActivity, sampleCalories];
+                        NSArray *samples = @[sampleCalories];
 
                         [[HealthKit sharedHealthStore] addSamples:samples toWorkout:workout completion:^(BOOL success_addSamples, NSError *mostInnerError) {
                             if (success_addSamples) {
